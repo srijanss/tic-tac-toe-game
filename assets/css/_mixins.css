@@ -204,7 +204,8 @@
       }
     }
 
-    &[data-activemark="x"]:hover:not(.cell-occupied) {
+    &[data-activemark="x"]:not(.cell-occupied):hover,
+    &[data-activemark="x"]:not(.cell-occupied):focus {
       position: relative;
       &:before {
         content: "";
@@ -219,7 +220,8 @@
       }
     }
 
-    &[data-activemark="o"]:hover:not(.cell-occupied) {
+    &[data-activemark="o"]:not(.cell-occupied):hover,
+    &[data-activemark="o"]:not(.cell-occupied):focus {
       position: relative;
       &:before {
         content: "";
