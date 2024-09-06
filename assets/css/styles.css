@@ -1,0 +1,48 @@
+@import "./_css-reset.css";
+@import "./_mixins.css";
+
+:root {
+  --color-silver: hsl(198, 23%, 72%);
+  --color-silver-hover: hsl(197, 33%, 89%);
+  --color-semi-dark-navy: hsl(199, 35%, 19%);
+  --color-dark-navy: hsl(202, 32%, 15%);
+  --color-light-yellow-hover: hsl(39, 100%, 69%);
+  --color-light-yellow: hsl(39, 88%, 58%);
+  --color-light-blue-hover: hsl(178, 75%, 65%);
+  --color-light-blue: hsl(178, 60%, 48%);
+  --color-error: hsl(0, 100%, 74%);
+  --default-font-family: Outfit, sans-serif;
+  --default-font-size: 16px;
+  --fw-medium: 500;
+  --fw-bold: 700;
+  --content-width-desktop: 1160px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  font-family: var(--default-font-family);
+  font-variation-settings: "wght" var(--fw-medium);
+  font-size: var(--default-font-size);
+  color: var(--color-silver);
+  background-color: var(--color-dark-navy);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+img {
+  max-inline-size: 100%;
+  object-fit: cover;
+}
+
+@mixin text-styles;
+@mixin button-styles;
+
+main {
+  @mixin body-styles;
+}
