@@ -4,12 +4,16 @@
 :root {
   --color-silver: hsl(198, 23%, 72%);
   --color-silver-hover: hsl(197, 33%, 89%);
+  --color-silver-border: #6b8997;
   --color-semi-dark-navy: hsl(199, 35%, 19%);
+  --color-semi-dark-navy-border: #10212a;
   --color-dark-navy: hsl(202, 32%, 15%);
   --color-light-yellow-hover: hsl(39, 100%, 69%);
   --color-light-yellow: hsl(39, 88%, 58%);
+  --color-light-yellow-border: #cc8b13;
   --color-light-blue-hover: hsl(178, 75%, 65%);
   --color-light-blue: hsl(178, 60%, 48%);
+  --color-light-blue-border: #118c87;
   --color-error: hsl(0, 100%, 74%);
   --default-font-family: Outfit, sans-serif;
   --default-font-size: 16px;
@@ -42,6 +46,7 @@ img {
 
 @mixin text-styles;
 @mixin button-styles;
+@mixin grid-styles;
 
 main {
   @mixin body-styles;

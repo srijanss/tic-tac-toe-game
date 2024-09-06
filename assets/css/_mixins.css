@@ -108,7 +108,7 @@
 
   .button-1 {
     background-color: var(--color-light-yellow);
-    border-bottom: 8px solid #cc8b13;
+    border-bottom: 8px solid var(--color-light-yellow-border);
 
     &:hover {
       background-color: var(--color-light-yellow-hover);
@@ -117,7 +117,7 @@
 
   .button-2 {
     background-color: var(--color-light-blue);
-    border-bottom: 8px solid #118c87;
+    border-bottom: 8px solid var(--color-light-blue-border);
 
     &:hover {
       background-color: var(--color-light-blue-hover);
@@ -126,7 +126,7 @@
 
   .secondary-button-1 {
     background-color: var(--color-light-yellow);
-    border-bottom: 4px solid #cc8b13;
+    border-bottom: 4px solid var(--color-light-yellow-border);
 
     &:hover {
       background-color: var(--color-light-yellow-hover);
@@ -135,7 +135,7 @@
 
   .secondary-button-2 {
     background-color: var(--color-silver);
-    border-bottom: 4px solid #6b8997;
+    border-bottom: 4px solid var(--color-silver-border);
 
     &:hover {
       background-color: var(--color-silver-hover);
@@ -148,10 +148,90 @@
     border-radius: 10px;
     border: none;
     background-color: var(--color-silver);
-    border-bottom: 4px solid #6b8997;
+    border-bottom: 4px solid var(--color-silver-border);
 
     &:hover {
       background-color: var(--color-silver-hover);
+    }
+  }
+}
+
+@define-mixin grid-styles {
+  .grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 1.5rem;
+    justify-content: center;
+  }
+  .grid-cell {
+    --cell-size: 96px;
+    --icon-size: 40px;
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: none;
+    border-radius: 10px;
+    background-color: var(--color-semi-dark-navy);
+    border-bottom: 8px solid var(--color-semi-dark-navy-border);
+
+    &[data-activemark="x"].cell-occupied {
+      position: relative;
+      &:before {
+        content: "";
+        width: var(--icon-size);
+        height: var(--icon-size);
+        position: absolute;
+        top: calc(50% - var(--icon-size) / 2);
+        left: calc(50% - var(--icon-size) / 2);
+        display: block;
+        background: url("../images/icon-x.svg") no-repeat center center /
+          contain;
+      }
+    }
+
+    &[data-activemark="o"].cell-occupied {
+      position: relative;
+      &:before {
+        content: "";
+        width: var(--icon-size);
+        height: var(--icon-size);
+        position: absolute;
+        top: calc(50% - var(--icon-size) / 2);
+        left: calc(50% - var(--icon-size) / 2);
+        display: block;
+        background: url("../images/icon-o.svg") no-repeat center center /
+          contain;
+      }
+    }
+
+    &[data-activemark="x"]:hover:not(.cell-occupied) {
+      position: relative;
+      &:before {
+        content: "";
+        width: var(--icon-size);
+        height: var(--icon-size);
+        position: absolute;
+        top: calc(50% - var(--icon-size) / 2);
+        left: calc(50% - var(--icon-size) / 2);
+        display: block;
+        background: url("../images/icon-x-outline.svg") no-repeat center center /
+          contain;
+      }
+    }
+
+    &[data-activemark="o"]:hover:not(.cell-occupied) {
+      position: relative;
+      &:before {
+        content: "";
+        width: var(--icon-size);
+        height: var(--icon-size);
+        position: absolute;
+        top: calc(50% - var(--icon-size) / 2);
+        left: calc(50% - var(--icon-size) / 2);
+        display: block;
+        background: url("../images/icon-o-outline.svg") no-repeat center center /
+          contain;
+      }
     }
   }
 }
