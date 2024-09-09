@@ -47,6 +47,8 @@ img {
 @mixin text-styles;
 @mixin button-styles;
 @mixin grid-styles;
+@mixin turn-component;
+@mixin score-component;
 
 main {
   @mixin body-styles;
