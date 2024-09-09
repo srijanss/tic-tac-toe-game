@@ -49,6 +49,8 @@ img {
 @mixin grid-styles;
 @mixin turn-component;
 @mixin score-component;
+@mixin visually-hidden;
+@mixin mark-select-component;
 
 main {
   @mixin body-styles;

@@ -281,6 +281,7 @@
       --component-height: 52px;
       --icon-size: 20px;
       --gap: 13px;
+      border-radius: 10px;
 
       & h1 {
         font-size: 1rem; /* 16px */
@@ -344,6 +345,90 @@
         font-size: 1.5rem; /* 24px */
         letter-spacing: 1.5px;
       }
+    }
+  }
+}
+
+@define-mixin mark-select-component {
+  .mark-select-component {
+    --component-width: 100%;
+    --radio-width: 132px;
+    --radio-height: 54px;
+    --icon-size: 32px;
+    width: var(--component-width);
+    background-color: var(--color-semi-dark-navy);
+    border-radius: 15px;
+    border-bottom: 8px solid var(--color-semi-dark-navy-border);
+    padding: 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    & fieldset {
+      & legend {
+        @mixin heading-xs-styles;
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+
+      & ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        background-color: var(--color-dark-navy);
+        border-radius: 10px;
+        padding: 0.5rem; /* 8px */
+        & li {
+          display: block;
+          width: var(--radio-width);
+          height: var(--radio-height);
+          position: relative;
+
+          & svg {
+            position: absolute;
+            top: calc(50% - var(--icon-size) / 2);
+            left: calc(50% - var(--icon-size) / 2);
+            width: var(--icon-size);
+            height: var(--icon-size);
+            & path {
+              fill: var(--color-silver);
+            }
+          }
+
+          & input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 100%;
+            height: 100%;
+
+            &:checked {
+              padding: 0;
+              margin: 0;
+              background-color: var(--color-silver);
+              border-radius: 10px;
+
+              & ~ svg {
+                & path {
+                  fill: var(--color-semi-dark-navy);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    & p {
+      @mixin body-styles;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    @mixin media-query-tablet {
+      --component-width: 460px;
+      --radio-width: 198px;
     }
   }
 }
