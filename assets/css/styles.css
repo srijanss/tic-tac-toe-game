@@ -46,12 +46,16 @@ img {
 
 @mixin text-styles;
 @mixin button-styles;
-@mixin grid-styles;
-@mixin turn-component;
-@mixin score-component;
 @mixin visually-hidden;
-@mixin mark-select-component;
 
-main {
+#app {
   @mixin body-styles;
+  --app-width: 100%;
+  width: var(--app-width);
+  padding: 1.5rem;
+
+  @mixin media-query-tablet {
+    --app-width: 460px;
+    margin: 0 auto;
+  }
 }
