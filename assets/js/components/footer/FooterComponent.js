@@ -1,15 +1,9 @@
 import css from "./FooterComponent.css?inline";
+import Store from "../../store";
 
 export default class FooterComponent extends HTMLElement {
   constructor() {
     super();
-    this.player1 = "You";
-    this.player2 = "Cpu";
-    this.player1Mark = "X";
-    this.player2Mark = "O";
-    this.player1Score = 0;
-    this.player2Score = 0;
-    this.ties = 0;
   }
 
   connectedCallback() {
@@ -22,16 +16,16 @@ export default class FooterComponent extends HTMLElement {
       <style>${css}</style>
       <footer>
         <section class="score-component x-score">
-          <h2>${this.player1Mark} (${this.player1})</h2>
-          <p>${this.player1Score}</p>
+          <h2>${Store.player1Mark} (${Store.player1})</h2>
+          <p>${Store.player1Score}</p>
         </section>
         <section class="score-component tie-score">
           <h2>Ties</h2>
-          <p>${this.ties}</p>
+          <p>${Store.ties}</p>
         </section>
         <section class="score-component o-score">
-          <h2>${this.player2Mark} (${this.player2})</h2>
-          <p>${this.player2Score}</p>
+          <h2>${Store.player2Mark} (${Store.player2})</h2>
+          <p>${Store.player2Score}</p>
         </section>
       </footer>
     `;

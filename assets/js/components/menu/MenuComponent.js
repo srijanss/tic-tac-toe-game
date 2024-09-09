@@ -1,4 +1,5 @@
 import css from "./MenuComponent.css?inline";
+import Store from "../../store";
 
 export default class MenuComponent extends HTMLElement {
   constructor() {
@@ -8,6 +9,7 @@ export default class MenuComponent extends HTMLElement {
   connectedCallback() {
     this.shadow = this.attachShadow({ mode: "open" });
     this.render();
+    this.handleEvents();
   }
 
   render() {
@@ -22,7 +24,7 @@ export default class MenuComponent extends HTMLElement {
               <ul>
                 <li>
                   <label for="x-mark" aria-label="Mark X">
-                    <input type="radio" name="mark" id="x-mark" value="x" checked />
+                    <input type="radio" name="mark" id="x-mark" value="${Store.activeMark}" checked />
                     <svg
                       width="64"
                       height="64"
@@ -58,11 +60,34 @@ export default class MenuComponent extends HTMLElement {
             <p>Remember: X goes first</p>
           </section>
           <div class="button-block">
-            <button class="button-1">New Game (vs CPU)</button>
-            <button class="button-2">New Game (vs player)</button>
+            <button class="button-1" data-versus="cpu">New Game (vs CPU)</button>
+            <button class="button-2" data-versus="player">New Game (vs player)</button>
           </div>
         </main>
       </div>
     `;
+  }
+
+  handleEvents() {
+    const markRadioButtons = this.shadow.querySelectorAll(
+      'input[type="radio"]'
+    );
+    Array.from(markRadioButtons).forEach((radio) => {
+      radio.addEventListener("change", (e) => {
+        markRadioButtons.forEach((radio) => {
+          radio.removeAttribute("checked");
+        });
+        e.currentTarget.setAttribute("checked", "");
+        Store.player1Mark = e.currentTarget.value;
+        Store.player2Mark = e.currentTarget.value === "x" ? "o" : "x";
+      });
+    });
+
+    const buttons = this.shadow.querySelectorAll("button");
+    Array.from(buttons).forEach((button) => {
+      button.addEventListener("click", (e) => {
+        Store.setPlayer(e.currentTarget.dataset.versus);
+      });
+    });
   }
 }

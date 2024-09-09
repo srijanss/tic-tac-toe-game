@@ -2,10 +2,12 @@ import HeaderComponent from "./components/header/HeaderComponent";
 import MenuComponent from "./components/menu/MenuComponent";
 import GameBoard from "./components/board/GameBoard";
 import FooterComponent from "./components/footer/FooterComponent";
+import Store from "./store";
 
 export default class App extends HTMLElement {
   constructor() {
     super();
+    Store.subscribe(this);
   }
 
   connectedCallback() {
@@ -14,20 +16,18 @@ export default class App extends HTMLElement {
   }
 
   renderMenu() {
-    return `
+    this.shadow.innerHTML = `
       <menu-component></menu-component>
       `;
   }
 
   renderGameBoard() {
-    return `
+    this.shadow.innerHTML = `
       <game-board></game-board>
     `;
   }
   render() {
-    this.shadow.innerHTML = `
-      ${this.renderGameBoard()}
-    `;
+    this.renderMenu();
   }
 }
 

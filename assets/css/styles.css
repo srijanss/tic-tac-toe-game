@@ -48,7 +48,8 @@ img {
 @mixin button-styles;
 @mixin visually-hidden;
 
-#app {
+tic-tac-toe-app {
+  display: block;
   @mixin body-styles;
   --app-width: 328px;
   width: var(--app-width);
