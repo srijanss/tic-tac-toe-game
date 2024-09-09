@@ -12,14 +12,9 @@
   @mixin button-styles;
 
   & .menu-component {
-    --board-width: 328px;
-    width: var(--board-width);
+    width: 100%;
     margin: 0 auto;
     margin-top: 95px;
-
-    @mixin media-query-tablet {
-      --board-width: 460px;
-    }
   }
 
   & .mark-select-component {

@@ -15,13 +15,8 @@
   @mixin button-styles;
 
   & .game-board {
-    --board-width: 328px;
-    width: var(--board-width);
+    width: 100%;
     margin: 0 auto;
-
-    @mixin media-query-tablet {
-      --board-width: 460px;
-    }
   }
 
   & .grid {
