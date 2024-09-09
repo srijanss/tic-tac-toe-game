@@ -94,6 +94,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 
     &:hover {
       background-color: var(--color-silver-hover);
@@ -176,6 +177,9 @@
 }
 
 @define-mixin button-styles {
+  button {
+    cursor: pointer;
+  }
   @mixin primary-button-styles;
   @mixin secondary-button-styles;
   @mixin restart-button-styles;
