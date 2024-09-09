@@ -1,6 +1,7 @@
 import HeaderComponent from "./components/header/HeaderComponent";
 import MenuComponent from "./components/menu/MenuComponent";
 import GameBoard from "./components/board/GameBoard";
+import FooterComponent from "./components/footer/FooterComponent";
 
 export default class App extends HTMLElement {
   constructor() {
@@ -34,3 +35,4 @@ customElements.define("tic-tac-toe-app", App);
 customElements.define("header-component", HeaderComponent);
 customElements.define("menu-component", MenuComponent);
 customElements.define("game-board", GameBoard);
+customElements.define("footer-component", FooterComponent);
