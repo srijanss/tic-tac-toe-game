@@ -158,82 +158,87 @@
 
 @define-mixin grid-styles {
   .grid {
+    --cell-size: 96px;
+    --icon-size: 40px;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, auto);
     gap: 1.5rem;
     justify-content: center;
-  }
-  .grid-cell {
-    --cell-size: 96px;
-    --icon-size: 40px;
-    width: var(--cell-size);
-    height: var(--cell-size);
-    border: none;
-    border-radius: 10px;
-    background-color: var(--color-semi-dark-navy);
-    border-bottom: 8px solid var(--color-semi-dark-navy-border);
+    & .grid-cell {
+      width: var(--cell-size);
+      height: var(--cell-size);
+      border: none;
+      border-radius: 10px;
+      background-color: var(--color-semi-dark-navy);
+      border-bottom: 8px solid var(--color-semi-dark-navy-border);
 
-    &[data-activemark="x"].cell-occupied {
-      position: relative;
-      &:before {
-        content: "";
-        width: var(--icon-size);
-        height: var(--icon-size);
-        position: absolute;
-        top: calc(50% - var(--icon-size) / 2);
-        left: calc(50% - var(--icon-size) / 2);
-        display: block;
-        background: url("../images/icon-x.svg") no-repeat center center /
-          contain;
+      &[data-activemark="x"].cell-occupied {
+        position: relative;
+        &:before {
+          content: "";
+          width: var(--icon-size);
+          height: var(--icon-size);
+          position: absolute;
+          top: calc(50% - var(--icon-size) / 2);
+          left: calc(50% - var(--icon-size) / 2);
+          display: block;
+          background: url("../images/icon-x.svg") no-repeat center center /
+            contain;
+        }
+      }
+
+      &[data-activemark="o"].cell-occupied {
+        position: relative;
+        &:before {
+          content: "";
+          width: var(--icon-size);
+          height: var(--icon-size);
+          position: absolute;
+          top: calc(50% - var(--icon-size) / 2);
+          left: calc(50% - var(--icon-size) / 2);
+          display: block;
+          background: url("../images/icon-o.svg") no-repeat center center /
+            contain;
+        }
+      }
+
+      &[data-activemark="x"]:not(.cell-occupied):hover,
+      &[data-activemark="x"]:not(.cell-occupied):focus {
+        position: relative;
+        &:before {
+          content: "";
+          width: var(--icon-size);
+          height: var(--icon-size);
+          position: absolute;
+          top: calc(50% - var(--icon-size) / 2);
+          left: calc(50% - var(--icon-size) / 2);
+          display: block;
+          background: url("../images/icon-x-outline.svg") no-repeat center
+            center / contain;
+        }
+      }
+
+      &[data-activemark="o"]:not(.cell-occupied):hover,
+      &[data-activemark="o"]:not(.cell-occupied):focus {
+        position: relative;
+        &:before {
+          content: "";
+          width: var(--icon-size);
+          height: var(--icon-size);
+          position: absolute;
+          top: calc(50% - var(--icon-size) / 2);
+          left: calc(50% - var(--icon-size) / 2);
+          display: block;
+          background: url("../images/icon-o-outline.svg") no-repeat center
+            center / contain;
+        }
       }
     }
 
-    &[data-activemark="o"].cell-occupied {
-      position: relative;
-      &:before {
-        content: "";
-        width: var(--icon-size);
-        height: var(--icon-size);
-        position: absolute;
-        top: calc(50% - var(--icon-size) / 2);
-        left: calc(50% - var(--icon-size) / 2);
-        display: block;
-        background: url("../images/icon-o.svg") no-repeat center center /
-          contain;
-      }
-    }
-
-    &[data-activemark="x"]:not(.cell-occupied):hover,
-    &[data-activemark="x"]:not(.cell-occupied):focus {
-      position: relative;
-      &:before {
-        content: "";
-        width: var(--icon-size);
-        height: var(--icon-size);
-        position: absolute;
-        top: calc(50% - var(--icon-size) / 2);
-        left: calc(50% - var(--icon-size) / 2);
-        display: block;
-        background: url("../images/icon-x-outline.svg") no-repeat center center /
-          contain;
-      }
-    }
-
-    &[data-activemark="o"]:not(.cell-occupied):hover,
-    &[data-activemark="o"]:not(.cell-occupied):focus {
-      position: relative;
-      &:before {
-        content: "";
-        width: var(--icon-size);
-        height: var(--icon-size);
-        position: absolute;
-        top: calc(50% - var(--icon-size) / 2);
-        left: calc(50% - var(--icon-size) / 2);
-        display: block;
-        background: url("../images/icon-o-outline.svg") no-repeat center center /
-          contain;
-      }
+    @mixin media-query-tablet {
+      --cell-size: 140px;
+      --icon-size: 64px;
     }
   }
 }
