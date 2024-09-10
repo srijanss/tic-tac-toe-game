@@ -51,6 +51,14 @@
         }
       }
 
+      &[data-activemark="x"].cell-occupied.winning-cell {
+        background-color: var(--color-light-blue);
+        border-bottom: 8px solid var(--color-light-blue-border);
+        &:before {
+          background-image: url("../../../images/icon-x-inverted.svg");
+        }
+      }
+
       &[data-activemark="o"].cell-occupied {
         position: relative;
         &:before {
@@ -63,6 +71,13 @@
           display: block;
           background: url("../../../images/icon-o.svg") no-repeat center center /
             contain;
+        }
+      }
+      &[data-activemark="o"].cell-occupied.winning-cell {
+        background-color: var(--color-light-yellow);
+        border-bottom: 8px solid var(--color-light-yellow-border);
+        &:before {
+          background-image: url("../../../images/icon-o-inverted.svg");
         }
       }
 

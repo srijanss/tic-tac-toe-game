@@ -4,6 +4,7 @@ import Store from "../../store";
 export default class FooterComponent extends HTMLElement {
   constructor() {
     super();
+    Store.subscribe(this);
     this.playerWithXMark =
       Store.player1Mark === "x" ? Store.player1 : Store.player2;
     this.playerWithOMark =
@@ -17,6 +18,16 @@ export default class FooterComponent extends HTMLElement {
   connectedCallback() {
     this.shadow = this.attachShadow({ mode: "open" });
     this.render();
+  }
+
+  update(result) {
+    if (result === Store.RESULT.WIN || result === Store.RESULT.TIE) {
+      this.XMarkScore =
+        Store.player1Mark === "x" ? Store.player1Score : Store.player2Score;
+      this.OMarkScore =
+        Store.player1Mark === "o" ? Store.player1Score : Store.player2Score;
+      this.render();
+    }
   }
 
   render() {

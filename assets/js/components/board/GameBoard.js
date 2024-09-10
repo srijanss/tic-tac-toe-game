@@ -4,12 +4,39 @@ import Store from "../../store";
 export default class GameBoard extends HTMLElement {
   constructor() {
     super();
+    Store.subscribe(this);
   }
 
   connectedCallback() {
     this.shadow = this.attachShadow({ mode: "open" });
     this.render();
     this.handleEvents();
+  }
+
+  update() {
+    this.reRenderCells();
+  }
+
+  reRenderCells() {
+    const grid = this.shadow.querySelector(".grid");
+    grid.innerHTML = this.renderCells();
+    this.handleEvents();
+  }
+
+  renderCells() {
+    return `
+      ${Store.gameBoard
+        .map((cell, index) => {
+          return `<button class="grid-cell ${
+            cell !== " " ? "cell-occupied" : ""
+          } ${
+            Store.winningCombination.includes(index) ? "winning-cell" : ""
+          }" data-activemark=${
+            cell === " " ? Store.activeMark : cell
+          } data-index="${index}"></button>`;
+        })
+        .join("")}
+    `;
   }
 
   render() {
@@ -19,15 +46,7 @@ export default class GameBoard extends HTMLElement {
         <header-component showTurn="true" showRestartButton="true"></header-component> 
         <main>
           <section class="grid">
-            <button class="grid-cell"></button>
-            <button class="grid-cell"></button>
-            <button class="grid-cell"></button>
-            <button class="grid-cell"></button>
-            <button class="grid-cell"></button>
-            <button class="grid-cell"></button>
-            <button class="grid-cell"></button>
-            <button class="grid-cell"></button>
-            <button class="grid-cell"></button>
+            ${this.renderCells()}
           </section>
         </main>
         <footer-component></footer-component>
@@ -35,28 +54,17 @@ export default class GameBoard extends HTMLElement {
     `;
   }
 
-  setMarkToGridCell(gridCells) {
-    Array.from(gridCells).forEach((cell) => {
-      if (!cell.classList.contains("cell-occupied")) {
-        cell.dataset.activemark = Store.activeMark;
-      }
-    });
-  }
-
   handleEvents() {
     const gridCells = this.shadow.querySelectorAll(".grid-cell");
-    this.setMarkToGridCell(gridCells);
 
     Array.from(gridCells).forEach((cell) => {
       cell.addEventListener("click", (e) => {
+        if (Store.gameStatus !== Store.RESULT.NO_RESULT) return;
         if (cell.classList.contains("cell-occupied")) {
           return;
         }
         cell.classList.add("cell-occupied");
-        Store.switchPlayerTurn();
-        setTimeout(() => {
-          this.setMarkToGridCell(gridCells);
-        }, 1);
+        Store.updateGameBoard(Number(cell.dataset.index));
       });
     });
   }

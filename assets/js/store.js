@@ -1,5 +1,11 @@
+import GameLogic from "./gameLogic.js";
 class Store {
   constructor() {
+    this.RESULT = {
+      WIN: "win",
+      TIE: "tie",
+      NO_RESULT: "no-result",
+    };
     this._player1 = "P1";
     this._player2 = "P2";
     this._player1Mark = "x";
@@ -8,7 +14,30 @@ class Store {
     this._player2Score = 0;
     this._ties = 0;
     this._activeMark = "x";
+    this._gameBoard = Array(9).fill(" ");
+    this._winningCombination = [];
+    this._gameStatus = this.RESULT.NO_RESULT;
     this._observers = [];
+  }
+
+  get gameBoard() {
+    return this._gameBoard;
+  }
+
+  get winningCombination() {
+    return this._winningCombination;
+  }
+
+  set winningCombination(combination) {
+    this._winningCombination = combination;
+  }
+
+  get gameStatus() {
+    return this._gameStatus;
+  }
+
+  set gameStatus(status) {
+    this._gameStatus = status;
   }
 
   get player1() {
@@ -118,7 +147,33 @@ class Store {
 
   switchPlayerTurn() {
     this.activeMark = this.activeMark === "x" ? "o" : "x";
-    this.notify();
+  }
+
+  updateGameBoard(index) {
+    this._gameBoard[index] = this.activeMark;
+    this.gameStatus = this.checkWinOrTie();
+    if (this.gameStatus === this.RESULT.NO_RESULT) {
+      this.switchPlayerTurn();
+    }
+    this.notify(this.gameStatus);
+  }
+
+  checkWinOrTie() {
+    const gameLogic = new GameLogic(this.gameBoard);
+    const result = gameLogic.checkWinner();
+    if (result) {
+      if (result.winner === this.player1Mark) {
+        this.player1Score++;
+      } else {
+        this.player2Score++;
+      }
+      this.winningCombination = result.winningCombination;
+      return this.RESULT.WIN;
+    } else if (gameLogic.checkTie()) {
+      this.ties++;
+      return this.RESULT.TIE;
+    }
+    return this.RESULT.NO_RESULT;
   }
 }
 
