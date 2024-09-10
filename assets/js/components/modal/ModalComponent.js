@@ -100,6 +100,7 @@ export default class ModalComponent extends HTMLElement {
     if (nextRoundBtn) {
       nextRoundBtn.addEventListener("click", () => {
         Store.resetGameBoard();
+        Store.resetActiveMark();
         Store.showGameBoard();
       });
     }
@@ -112,8 +113,9 @@ export default class ModalComponent extends HTMLElement {
     const restartBtn = this.shadow.querySelector("#restart-btn");
     if (restartBtn) {
       restartBtn.addEventListener("click", () => {
-        Store.showMenu();
         Store.resetGameBoard();
+        Store.resetActiveMark();
+        Store.showGameBoard();
       });
     }
   }

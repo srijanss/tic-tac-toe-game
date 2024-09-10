@@ -244,8 +244,12 @@ class Store {
     this.player2 = this.PLAYER.PLAYER2;
     this.player1Mark = this.MARK.X;
     this.player2Mark = this.MARK.O;
-    this.activeMark = this.MARK.X;
     this.versus = this.VERSUS.PLAYER;
+    this.resetActiveMark();
+  }
+
+  resetActiveMark() {
+    this.activeMark = this.MARK.X;
   }
 }
 
