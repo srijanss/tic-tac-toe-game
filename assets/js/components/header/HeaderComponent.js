@@ -18,6 +18,9 @@ export default class HeaderComponent extends HTMLElement {
     this.render();
     this.handleEvents();
   }
+  disconnectedCallback() {
+    Store.unsubscribe(this);
+  }
 
   update() {
     const turnWrapper = this.shadow.querySelector(".turn-wrapper");

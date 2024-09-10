@@ -17,20 +17,31 @@ export default class App extends HTMLElement {
   }
 
   renderMenu() {
-    this.shadow.innerHTML = `
+    this.clearContent();
+    setTimeout(() => {
+      this.shadow.innerHTML = `
       <menu-component></menu-component>
       <modal-component></modal-component>
       `;
+    });
   }
 
   renderGameBoard() {
-    this.shadow.innerHTML = `
+    this.clearContent();
+    setTimeout(() => {
+      this.shadow.innerHTML = `
       <game-board></game-board>
       <modal-component></modal-component>
     `;
+    }, 1);
   }
+
   render() {
     this.renderMenu();
+  }
+
+  clearContent() {
+    this.shadow.innerHTML = "";
   }
 }
 

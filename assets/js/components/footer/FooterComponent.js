@@ -19,6 +19,9 @@ export default class FooterComponent extends HTMLElement {
     this.shadow = this.attachShadow({ mode: "open" });
     this.render();
   }
+  disconnectedCallback() {
+    Store.unsubscribe(this);
+  }
 
   update(result) {
     if (result === Store.RESULT.WIN || result === Store.RESULT.TIE) {

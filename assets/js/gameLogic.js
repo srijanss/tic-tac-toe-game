@@ -36,4 +36,23 @@ export default class GameLogic {
   checkTie() {
     return this.gameBoard.every((cell) => cell !== " ");
   }
+
+  cpuRandomMove(emptyCells) {
+    return emptyCells[Math.floor(Math.random() * emptyCells.length)];
+  }
+
+  findEmptyCell() {
+    const emptyCells = this.gameBoard.reduce((acc, cell, index) => {
+      if (cell === " ") {
+        acc.push(index);
+      }
+      return acc;
+    }, []);
+    return this.cpuRandomMove(emptyCells);
+  }
+
+  getCpuMove() {
+    const emptyCell = this.findEmptyCell();
+    return emptyCell;
+  }
 }

@@ -11,6 +11,11 @@ export default class GameBoard extends HTMLElement {
     this.shadow = this.attachShadow({ mode: "open" });
     this.render();
     this.handleEvents();
+    this.makeCpuMove();
+  }
+
+  disconnectedCallback() {
+    Store.unsubscribe(this);
   }
 
   update() {
@@ -21,6 +26,7 @@ export default class GameBoard extends HTMLElement {
     const grid = this.shadow.querySelector(".grid");
     grid.innerHTML = this.renderCells();
     this.handleEvents();
+    this.makeCpuMove();
   }
 
   renderCells() {
@@ -59,6 +65,7 @@ export default class GameBoard extends HTMLElement {
 
     Array.from(gridCells).forEach((cell) => {
       cell.addEventListener("click", (e) => {
+        if (Store.activePlayer === Store.PLAYER.CPU) return;
         if (Store.gameStatus !== Store.RESULT.NO_RESULT) return;
         if (cell.classList.contains("cell-occupied")) {
           return;
@@ -67,5 +74,21 @@ export default class GameBoard extends HTMLElement {
         Store.updateGameBoard(Number(cell.dataset.index));
       });
     });
+  }
+
+  makeCpuMove() {
+    if (Store.activePlayer === Store.PLAYER.CPU) {
+      if (Store.gameStatus !== Store.RESULT.NO_RESULT) return;
+      setTimeout(() => {
+        const cpuMove = Store.getCpuMove();
+        const cell = this.shadow.querySelector(
+          `button[data-index="${cpuMove}"]`
+        );
+        if (cell) {
+          cell.classList.add("cell-occupied");
+          Store.updateGameBoard(cpuMove);
+        }
+      }, 300);
+    }
   }
 }

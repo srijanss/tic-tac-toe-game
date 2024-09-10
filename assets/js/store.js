@@ -29,8 +29,10 @@ class Store {
     this._player2Score = 0;
     this._ties = 0;
     this._activeMark = this.MARK.X;
+    this._activePlayer = this.PLAYER.PLAYER1;
     this._gameBoard = Array(9).fill(" ");
     this._winningCombination = [];
+    this._winnerMark = null;
     this._gameStatus = this.RESULT.NO_RESULT;
     this._observers = [];
   }
@@ -45,6 +47,14 @@ class Store {
 
   set winningCombination(combination) {
     this._winningCombination = combination;
+  }
+
+  get winnerMark() {
+    return this._winnerMark;
+  }
+
+  set winnerMark(mark) {
+    this._winnerMark = mark;
   }
 
   get gameStatus() {
@@ -83,26 +93,59 @@ class Store {
     return this._player1Mark;
   }
 
+  get activePlayer() {
+    return this._activePlayer;
+  }
+
+  set activePlayer(player) {
+    this._activePlayer = player;
+  }
+
+  setActivePlayer() {
+    return new Promise((resolve, reject) => {
+      try {
+        if (this.player1Mark === this.MARK.X) {
+          if (this._versus === this.VERSUS.CPU) {
+            this.activePlayer = this.PLAYER.YOU;
+          } else {
+            this.activePlayer = this.PLAYER.PLAYER1;
+          }
+        } else {
+          if (this._versus === this.VERSUS.CPU) {
+            this.activePlayer = this.PLAYER.CPU;
+          } else {
+            this.activePlayer = this.PLAYER.PLAYER2;
+          }
+        }
+        return resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   setPlayer(versus) {
-    this._versus = versus;
-    if (this.activeMark === this.MARK.X) {
-      if (this._versus === this.VERSUS.CPU) {
-        this._player1 = this.PLAYER.YOU;
-        this._player2 = this.PLAYER.CPU;
-      } else {
-        this._player1 = this.PLAYER.PLAYER1;
-        this._player2 = this.PLAYER.PLAYER2;
+    return new Promise((resolve, reject) => {
+      try {
+        this._versus = versus;
+        if (this._versus === this.VERSUS.CPU) {
+          this.player1 = this.PLAYER.YOU;
+          this.player2 = this.PLAYER.CPU;
+        } else {
+          this.player1 = this.PLAYER.PLAYER1;
+          this.player2 = this.PLAYER.PLAYER2;
+        }
+        this.setActivePlayer()
+          .then(() => {
+            return resolve();
+          })
+          .catch((error) => {
+            throw error;
+          });
+      } catch (error) {
+        reject(error);
       }
-    } else {
-      if (this._versus === this.VERSUS.CPU) {
-        this._player1 = this.PLAYER.CPU;
-        this._player2 = this.PLAYER.YOU;
-      } else {
-        this._player1 = this.PLAYER.PLAYER2;
-        this._player2 = this.PLAYER.PLAYER1;
-      }
-    }
-    this.showGameBoard();
+    });
   }
 
   set player1Mark(mark) {
@@ -149,8 +192,12 @@ class Store {
     this._activeMark = mark;
   }
 
-  subscribe(fn) {
-    this._observers.push(fn);
+  subscribe(observer) {
+    this._observers.push(observer);
+  }
+
+  unsubscribe(observer) {
+    this._observers = this._observers.filter((obs) => obs !== observer);
   }
 
   notify(data) {
@@ -196,14 +243,24 @@ class Store {
   switchPlayerTurn() {
     this.activeMark =
       this.activeMark === this.MARK.X ? this.MARK.O : this.MARK.X;
+    if (this.versus === this.VERSUS.CPU) {
+      this.activePlayer =
+        this.activePlayer === this.PLAYER.CPU
+          ? this.PLAYER.YOU
+          : this.PLAYER.CPU;
+    } else {
+      this.activePlayer =
+        this.activePlayer === this.PLAYER.PLAYER1
+          ? this.PLAYER.PLAYER2
+          : this.PLAYER.PLAYER1;
+    }
   }
 
   updateGameBoard(index) {
     this._gameBoard[index] = this.activeMark;
     this.gameStatus = this.checkWinOrTie();
-    if (this.gameStatus === this.RESULT.NO_RESULT) {
-      this.switchPlayerTurn();
-    } else {
+    this.switchPlayerTurn();
+    if (this.gameStatus !== this.RESULT.NO_RESULT) {
       this.showGameStatus();
     }
     this.notify(this.gameStatus);
@@ -219,6 +276,7 @@ class Store {
         this.player2Score++;
       }
       this.winningCombination = result.winningCombination;
+      this.winnerMark = result.winner;
       return this.RESULT.WIN;
     } else if (gameLogic.checkTie()) {
       this.ties++;
@@ -245,11 +303,30 @@ class Store {
     this.player1Mark = this.MARK.X;
     this.player2Mark = this.MARK.O;
     this.versus = this.VERSUS.PLAYER;
-    this.resetActiveMark();
+    this.activeMark = this.MARK.X;
+    this.activePlayer = this.PLAYER.PLAYER1;
   }
 
-  resetActiveMark() {
-    this.activeMark = this.MARK.X;
+  restoreActivePlayer() {
+    return new Promise((resolve, reject) => {
+      try {
+        this.setActivePlayer()
+          .then(() => {
+            this.activeMark = this.MARK.X;
+            return resolve();
+          })
+          .catch((error) => {
+            throw error;
+          });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  getCpuMove() {
+    const gameLogic = new GameLogic(this.gameBoard);
+    return gameLogic.getCpuMove();
   }
 }
 

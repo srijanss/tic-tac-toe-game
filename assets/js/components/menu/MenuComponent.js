@@ -86,7 +86,9 @@ export default class MenuComponent extends HTMLElement {
     const buttons = this.shadow.querySelectorAll("button");
     Array.from(buttons).forEach((button) => {
       button.addEventListener("click", (e) => {
-        Store.setPlayer(e.currentTarget.dataset.versus);
+        Store.setPlayer(e.currentTarget.dataset.versus).then(() => {
+          Store.showGameBoard();
+        });
       });
     });
   }

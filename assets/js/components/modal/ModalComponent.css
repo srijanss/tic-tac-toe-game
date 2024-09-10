@@ -39,7 +39,7 @@
         text-transform: uppercase;
         margin-top: 1rem;
         margin-bottom: 1.5rem;
-        &[data-activemark="x"] {
+        &[data-winnermark="x"] {
           --icon-size: 28px;
           color: var(--color-light-blue);
           padding-left: calc(var(--icon-size) + 9px);
@@ -56,7 +56,7 @@
             background-repeat: no-repeat;
           }
         }
-        &[data-activemark="o"] {
+        &[data-winnermark="o"] {
           --icon-size: 30px;
           color: var(--color-light-yellow);
           padding-left: calc(var(--icon-size) + 9px);

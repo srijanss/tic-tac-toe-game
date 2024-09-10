@@ -12,20 +12,27 @@ export default class ModalComponent extends HTMLElement {
     this.shadow = this.attachShadow({ mode: "open" });
   }
 
+  disconnectedCallback() {
+    Store.unsubscribe(this);
+  }
+
   getGameStatus() {
     if (Store.gameStatus === Store.RESULT.TIE) {
       this.gameStatusText = "Round tied";
       return this.gameStatusText;
     }
-    const winningMark = Store.activeMark;
     if (Store.versus === Store.VERSUS.CPU) {
       if (Store.gameStatus === Store.RESULT.WIN) {
         this.gameStatusText =
-          Store.player1Mark === winningMark ? "You won!" : "Oh no, you lost...";
+          Store.player1Mark === Store.winnerMark
+            ? "You won!"
+            : "Oh no, you lost...";
       }
     } else {
       this.gameStatusText =
-        Store.player1Mark === winningMark ? "Player 1 wins!" : "Player 2 wins!";
+        Store.player1Mark === Store.winnerMark
+          ? "Player 1 wins!"
+          : "Player 2 wins!";
     }
     return this.gameStatusText;
   }
@@ -39,7 +46,7 @@ export default class ModalComponent extends HTMLElement {
       }
       ${
         Store.gameStatus === Store.RESULT.WIN
-          ? `<h2 data-activemark="${Store.activeMark}">Takes the round</h2>`
+          ? `<h2 data-winnermark="${Store.winnerMark}">Takes the round</h2>`
           : ""
       }
       ${Store.gameStatus === Store.RESULT.TIE ? `<h2>Round tied</h2>` : ""}
@@ -100,8 +107,9 @@ export default class ModalComponent extends HTMLElement {
     if (nextRoundBtn) {
       nextRoundBtn.addEventListener("click", () => {
         Store.resetGameBoard();
-        Store.resetActiveMark();
-        Store.showGameBoard();
+        Store.restoreActivePlayer().then(() => {
+          Store.showGameBoard();
+        });
       });
     }
     const cancelRestartBtn = this.shadow.querySelector("#cancel-restart-btn");
@@ -114,8 +122,9 @@ export default class ModalComponent extends HTMLElement {
     if (restartBtn) {
       restartBtn.addEventListener("click", () => {
         Store.resetGameBoard();
-        Store.resetActiveMark();
-        Store.showGameBoard();
+        Store.restoreActivePlayer().then(() => {
+          Store.showGameBoard();
+        });
       });
     }
   }
