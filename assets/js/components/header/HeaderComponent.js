@@ -16,6 +16,7 @@ export default class HeaderComponent extends HTMLElement {
   connectedCallback() {
     this.shadow = this.attachShadow({ mode: "open" });
     this.render();
+    this.handleEvents();
   }
 
   update() {
@@ -85,5 +86,14 @@ export default class HeaderComponent extends HTMLElement {
         ${this.showRestartButton ? `${this.renderRestartButton()}` : ""}
       </header>
     `;
+  }
+
+  handleEvents() {
+    const restartBtn = this.shadow.querySelector(".restart-button");
+    if (restartBtn) {
+      restartBtn.addEventListener("click", () => {
+        Store.showRestartOptions();
+      });
+    }
   }
 }

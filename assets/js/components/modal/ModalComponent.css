@@ -1,0 +1,84 @@
+@import "../../../css/_css-reset.css";
+@import "../../../css/_mixins.css";
+
+:host *,
+:host *:before,
+:host *:after {
+  box-sizing: border-box;
+}
+
+:host {
+  @mixin visually-hidden;
+  @mixin button-styles;
+
+  & .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000050;
+    display: flex;
+    align-items: center;
+
+    & #modal-content {
+      flex: 1;
+      background-color: var(--color-semi-dark-navy);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 0;
+      & p {
+        @mixin body-styles;
+        font-variation-settings: "wght" var(--fw-bold);
+        text-transform: uppercase;
+        color: var(--color-silver);
+      }
+      & h2 {
+        @mixin heading-m-styles;
+        text-transform: uppercase;
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
+        &[data-activemark="x"] {
+          --icon-size: 28px;
+          color: var(--color-light-blue);
+          padding-left: calc(var(--icon-size) + 9px);
+          position: relative;
+          &:before {
+            content: "";
+            width: var(--icon-size);
+            height: var(--icon-size);
+            position: absolute;
+            top: calc(50% - var(--icon-size) / 2);
+            left: 0;
+            background-image: url("../../../images/icon-x.svg");
+            background-size: contain;
+            background-repeat: no-repeat;
+          }
+        }
+        &[data-activemark="o"] {
+          --icon-size: 30px;
+          color: var(--color-light-yellow);
+          padding-left: calc(var(--icon-size) + 9px);
+          position: relative;
+          &:before {
+            content: "";
+            width: var(--icon-size);
+            height: var(--icon-size);
+            position: absolute;
+            top: calc(50% - var(--icon-size) / 2);
+            left: 0;
+            background-image: url("../../../images/icon-o.svg");
+            background-size: contain;
+            background-repeat: no-repeat;
+          }
+        }
+      }
+
+      & .button-block {
+        display: flex;
+        gap: 1rem;
+      }
+    }
+  }
+}
