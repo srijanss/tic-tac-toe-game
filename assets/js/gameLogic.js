@@ -1,6 +1,6 @@
 export default class GameLogic {
   constructor(gameBoard, activeMark, opponentMark) {
-    this.gameBoard = gameBoard;
+    this._gameBoard = gameBoard;
     this._activeMark = activeMark;
     this._opponentMark = opponentMark;
     this.MODE = {
@@ -21,20 +21,20 @@ export default class GameLogic {
     ];
   }
 
+  get gameBoard() {
+    return this._gameBoard;
+  }
+
+  set gameBoard(board) {
+    this._gameBoard = board;
+  }
+
   get activeMark() {
     return this._activeMark;
   }
 
-  set activeMark(mark) {
-    this._activeMark = mark;
-  }
-
   get opponentMark() {
     return this._opponentMark;
-  }
-
-  set opponentMark(mark) {
-    this._opponentMark = mark;
   }
 
   checkWinner() {
