@@ -1,6 +1,10 @@
 import GameLogic from "./gameLogic.js";
 class Store {
   constructor() {
+    this.PAGE = {
+      MENU: "menu",
+      BOARD: "board",
+    };
     this.RESULT = {
       WIN: "win",
       TIE: "tie",
@@ -34,11 +38,80 @@ class Store {
     this._winningCombination = [];
     this._winnerMark = null;
     this._gameStatus = this.RESULT.NO_RESULT;
+    this._activePage = this.PAGE.BOARD;
     this._observers = [];
+    this.init();
+  }
+
+  getFromLocalStorage() {
+    return localStorage.getItem("store")
+      ? JSON.parse(localStorage.getItem("store"))
+      : {};
+  }
+
+  setToLocalStorage(data) {
+    localStorage.setItem("store", JSON.stringify(data));
+  }
+
+  init() {
+    let data = this.getFromLocalStorage();
+    this.versus = data.versus || this.VERSUS.PLAYER;
+    this.player1 = data.player1 || this.PLAYER.PLAYER1;
+    this.player2 = data.player2 || this.PLAYER.PLAYER2;
+    this.player1Mark = data.player1Mark || this.MARK.X;
+    this.player2Mark = data.player2Mark || this.MARK.O;
+    this.player1Score = data.player1Score || 0;
+    this.player2Score = data.player2Score || 0;
+    this.ties = data.ties || 0;
+    this.activeMark = data.activeMark || this.MARK.X;
+    this.activePlayer = data.activePlayer || this.PLAYER.PLAYER1;
+    this.gameBoard = data.gameBoard || Array(9).fill(" ");
+    this.winningCombination = data.winningCombination || [];
+    this.winnerMark = data.winnerMark || null;
+    this.gameStatus = data.gameStatus || this.RESULT.NO_RESULT;
+    this.activePage = data.activePage || this.PAGE.BOARD;
+    data = {
+      versus: this.versus,
+      player1: this.player1,
+      player2: this.player2,
+      player1Mark: this.player1Mark,
+      player2Mark: this.player2Mark,
+      player1Score: this.player1Score,
+      player2Score: this.player2Score,
+      ties: this.ties,
+      activeMark: this.activeMark,
+      activePlayer: this.activePlayer,
+      gameBoard: this.gameBoard,
+      winningCombination: this.winningCombination,
+      winnerMark: this.winnerMark,
+      gameStatus: this.gameStatus,
+      activePage: this.activePage,
+    };
+    this.setToLocalStorage(data);
+  }
+
+  updateData(obj) {
+    const data = this.getFromLocalStorage();
+    Object.keys(obj).forEach((key) => {
+      data[key] = obj[key];
+    });
+    this.setToLocalStorage(data);
+  }
+
+  get activePage() {
+    return this._activePage;
+  }
+
+  set activePage(page) {
+    this._activePage = page;
   }
 
   get gameBoard() {
     return this._gameBoard;
+  }
+
+  set gameBoard(board) {
+    this._gameBoard = board;
   }
 
   get winningCombination() {
@@ -89,10 +162,6 @@ class Store {
     this._player2 = player;
   }
 
-  get player1Mark() {
-    return this._player1Mark;
-  }
-
   get activePlayer() {
     return this._activePlayer;
   }
@@ -101,51 +170,8 @@ class Store {
     this._activePlayer = player;
   }
 
-  setActivePlayer() {
-    return new Promise((resolve, reject) => {
-      try {
-        if (this.player1Mark === this.MARK.X) {
-          if (this._versus === this.VERSUS.CPU) {
-            this.activePlayer = this.PLAYER.YOU;
-          } else {
-            this.activePlayer = this.PLAYER.PLAYER1;
-          }
-        } else {
-          if (this._versus === this.VERSUS.CPU) {
-            this.activePlayer = this.PLAYER.CPU;
-          } else {
-            this.activePlayer = this.PLAYER.PLAYER2;
-          }
-        }
-        return resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
-
-  setPlayer(versus) {
-    return new Promise((resolve, reject) => {
-      try {
-        this._versus = versus;
-        if (this._versus === this.VERSUS.CPU) {
-          this.player1 = this.PLAYER.YOU;
-          this.player2 = this.PLAYER.CPU;
-        } else {
-          this.player1 = this.PLAYER.PLAYER1;
-          this.player2 = this.PLAYER.PLAYER2;
-        }
-        this.setActivePlayer()
-          .then(() => {
-            return resolve();
-          })
-          .catch((error) => {
-            throw error;
-          });
-      } catch (error) {
-        reject(error);
-      }
-    });
+  get player1Mark() {
+    return this._player1Mark;
   }
 
   set player1Mark(mark) {
@@ -209,6 +235,8 @@ class Store {
   }
 
   showGameBoard() {
+    this.activePage = this.PAGE.BOARD;
+    this.updateData({ activePage: this.activePage });
     this._observers.forEach((observer) => {
       if (observer.renderGameBoard) {
         observer.renderGameBoard();
@@ -217,6 +245,8 @@ class Store {
   }
 
   showMenu() {
+    this.activePage = this.PAGE.MENU;
+    this.updateData({ activePage: this.activePage });
     this._observers.forEach((observer) => {
       if (observer.renderMenu) {
         observer.renderMenu();
@@ -240,6 +270,59 @@ class Store {
     });
   }
 
+  setActivePlayer() {
+    return new Promise((resolve, reject) => {
+      try {
+        if (this.player1Mark === this.MARK.X) {
+          if (this._versus === this.VERSUS.CPU) {
+            this.activePlayer = this.PLAYER.YOU;
+          } else {
+            this.activePlayer = this.PLAYER.PLAYER1;
+          }
+        } else {
+          if (this._versus === this.VERSUS.CPU) {
+            this.activePlayer = this.PLAYER.CPU;
+          } else {
+            this.activePlayer = this.PLAYER.PLAYER2;
+          }
+        }
+        this.updateData({ activePlayer: this.activePlayer });
+        return resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  setPlayer(versus) {
+    return new Promise((resolve, reject) => {
+      try {
+        this.versus = versus;
+        if (this.versus === this.VERSUS.CPU) {
+          this.player1 = this.PLAYER.YOU;
+          this.player2 = this.PLAYER.CPU;
+        } else {
+          this.player1 = this.PLAYER.PLAYER1;
+          this.player2 = this.PLAYER.PLAYER2;
+        }
+        this.updateData({
+          versus: this.versus,
+          player1: this.player1,
+          player2: this.player2,
+        });
+        this.setActivePlayer()
+          .then(() => {
+            return resolve();
+          })
+          .catch((error) => {
+            throw error;
+          });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   switchPlayerTurn() {
     this.activeMark =
       this.activeMark === this.MARK.X ? this.MARK.O : this.MARK.X;
@@ -254,10 +337,14 @@ class Store {
           ? this.PLAYER.PLAYER2
           : this.PLAYER.PLAYER1;
     }
+    this.updateData({
+      activePlayer: this.activePlayer,
+      activeMark: this.activeMark,
+    });
   }
 
   updateGameBoard(index) {
-    this._gameBoard[index] = this.activeMark;
+    this.gameBoard[index] = this.activeMark;
     this.gameStatus = this.checkWinOrTie();
     this.switchPlayerTurn();
     if (this.gameStatus !== this.RESULT.NO_RESULT) {
@@ -265,6 +352,10 @@ class Store {
         this.showGameStatus();
       }, 500);
     }
+    this.updateData({
+      gameBoard: this.gameBoard,
+      gameStatus: this.gameStatus,
+    });
     this.notify(this.gameStatus);
   }
 
@@ -285,24 +376,41 @@ class Store {
       }
       this.winningCombination = result.winningCombination;
       this.winnerMark = result.winner;
+      this.updateData({
+        player1Score: this.player1Score,
+        player2Score: this.player2Score,
+        winningCombination: this.winningCombination,
+        winnerMark: this.winnerMark,
+      });
       return this.RESULT.WIN;
     } else if (gameLogic.checkTie()) {
       this.ties++;
+      this.updateData({ ties: this.ties });
       return this.RESULT.TIE;
     }
     return this.RESULT.NO_RESULT;
   }
 
   resetGameBoard() {
-    this._gameBoard = Array(9).fill(" ");
-    this._winningCombination = [];
-    this._gameStatus = this.RESULT.NO_RESULT;
+    this.gameBoard = Array(9).fill(" ");
+    this.winningCombination = [];
+    this.gameStatus = this.RESULT.NO_RESULT;
+    this.updateData({
+      gameBoard: this.gameBoard,
+      winningCombination: this.winningCombination,
+      gameStatus: this.gameStatus,
+    });
   }
 
   resetScores() {
     this.player1Score = 0;
     this.player2Score = 0;
     this.ties = 0;
+    this.updateData({
+      player1Score: this.player1Score,
+      player2Score: this.player2Score,
+      ties: this.ties,
+    });
   }
 
   resetPlayers() {
@@ -313,6 +421,15 @@ class Store {
     this.versus = this.VERSUS.PLAYER;
     this.activeMark = this.MARK.X;
     this.activePlayer = this.PLAYER.PLAYER1;
+    this.updateData({
+      player1: this.player1,
+      player2: this.player2,
+      player1Mark: this.player1Mark,
+      player2Mark: this.player2Mark,
+      versus: this.versus,
+      activeMark: this.activeMark,
+      activePlayer: this.activePlayer,
+    });
   }
 
   restoreActivePlayer() {
@@ -321,6 +438,7 @@ class Store {
         this.setActivePlayer()
           .then(() => {
             this.activeMark = this.MARK.X;
+            this.updateData({ activeMark: this.activeMark });
             return resolve();
           })
           .catch((error) => {

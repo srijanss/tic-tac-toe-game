@@ -11,6 +11,11 @@ export default class GameBoard extends HTMLElement {
   connectedCallback() {
     this.shadow = this.attachShadow({ mode: "open" });
     this.render();
+    if (Store.gameStatus !== Store.RESULT.NO_RESULT) {
+      setTimeout(() => {
+        Store.showGameStatus();
+      }, 500);
+    }
     this.handleEvents();
     this.makeCpuMove();
   }

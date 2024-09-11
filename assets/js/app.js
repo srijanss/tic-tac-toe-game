@@ -41,6 +41,10 @@ export default class App extends HTMLElement {
   }
 
   render() {
+    if (Store.activePage === Store.PAGE.MENU) {
+      this.renderMenu();
+      return;
+    }
     this.renderGameBoard();
   }
 
