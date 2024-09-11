@@ -41,7 +41,7 @@ export default class App extends HTMLElement {
   }
 
   render() {
-    this.renderMenu();
+    this.renderGameBoard();
   }
 
   clearContent() {
