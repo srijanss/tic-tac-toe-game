@@ -4,6 +4,7 @@ import Store from "../../store";
 export default class GameBoard extends HTMLElement {
   constructor() {
     super();
+    this.keyboardAccess = false;
     Store.subscribe(this);
   }
 
@@ -20,6 +21,9 @@ export default class GameBoard extends HTMLElement {
 
   update() {
     this.reRenderCells();
+    if (this.keyboardAccess) {
+      this.focusGrid();
+    }
   }
 
   focusGrid() {
@@ -78,19 +82,31 @@ export default class GameBoard extends HTMLElement {
     `;
   }
 
+  handleGridCellEvents(cell) {
+    if (Store.activePlayer === Store.PLAYER.CPU) return;
+    if (Store.gameStatus !== Store.RESULT.NO_RESULT) return;
+    if (cell.classList.contains("cell-occupied")) {
+      return;
+    }
+    cell.classList.add("cell-occupied");
+    Store.updateGameBoard(Number(cell.dataset.index));
+  }
+
   handleEvents() {
     const gridCells = this.shadow.querySelectorAll(".grid-cell");
 
     Array.from(gridCells).forEach((cell) => {
       cell.addEventListener("click", (e) => {
         e.preventDefault();
-        if (Store.activePlayer === Store.PLAYER.CPU) return;
-        if (Store.gameStatus !== Store.RESULT.NO_RESULT) return;
-        if (cell.classList.contains("cell-occupied")) {
-          return;
+        this.keyboardAccess = false;
+        this.handleGridCellEvents(cell);
+      });
+      cell.addEventListener("keydown", (e) => {
+        if (e.key === " " || e.key === "Enter") {
+          e.preventDefault();
+          this.keyboardAccess = true;
+          this.handleGridCellEvents(cell);
         }
-        cell.classList.add("cell-occupied");
-        Store.updateGameBoard(Number(cell.dataset.index));
       });
     });
   }
