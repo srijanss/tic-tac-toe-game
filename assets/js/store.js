@@ -342,6 +342,30 @@ class Store {
     );
     return gameLogic.getCpuMove();
   }
+
+  focusRestartButton() {
+    this._observers.forEach((observer) => {
+      if (observer.focusRestartButton) {
+        observer.focusRestartButton();
+      }
+    });
+  }
+
+  focusGrid() {
+    this._observers.forEach((observer) => {
+      if (observer.focusGrid) {
+        observer.focusGrid();
+      }
+    });
+  }
+
+  focusMenu() {
+    this._observers.forEach((observer) => {
+      if (observer.focusMenu) {
+        observer.focusMenu();
+      }
+    });
+  }
 }
 
 const store = new Store();

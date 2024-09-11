@@ -4,6 +4,7 @@ import Store from "../../store";
 export default class MenuComponent extends HTMLElement {
   constructor() {
     super();
+    Store.subscribe(this);
   }
 
   connectedCallback() {
@@ -12,13 +13,25 @@ export default class MenuComponent extends HTMLElement {
     this.handleEvents();
   }
 
+  disconnectedCallback() {
+    Store.unsubscribe(this);
+  }
+
+  focusMenu() {
+    const markComponent = this.shadow.querySelector(".mark-select-component");
+    if (markComponent) {
+      markComponent.focus();
+    }
+  }
+
   render() {
     this.shadow.innerHTML = `
       <style>${css}</style>
       <div class="menu-component">
         <header-component extraClass="jc-center"></header-component>
         <main>
-          <section class="mark-select-component">
+          <section class="mark-select-component" aria-labelledby="pick-mark-note" tabindex='-1">
+            <span id="pick-mark-note" class="visually-hidden">"Pick player 1's mark, Remember: X goes first"</span>
             <fieldset>
               <legend>Pick player 1's mark</legend>
               <ul>

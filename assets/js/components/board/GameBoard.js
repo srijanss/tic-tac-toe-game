@@ -22,6 +22,13 @@ export default class GameBoard extends HTMLElement {
     this.reRenderCells();
   }
 
+  focusGrid() {
+    const firstCell = this.shadow.querySelector("button[data-index='0']");
+    if (firstCell && Store.activePlayer !== Store.PLAYER.CPU) {
+      firstCell.focus();
+    }
+  }
+
   reRenderCells() {
     const grid = this.shadow.querySelector(".grid");
     grid.innerHTML = this.renderCells();
@@ -39,7 +46,17 @@ export default class GameBoard extends HTMLElement {
             Store.winningCombination.includes(index) ? "winning-cell" : ""
           }" data-activemark=${
             cell === " " ? Store.activeMark : cell
-          } data-index="${index}"></button>`;
+          } data-index="${index}" role="gridcell" aria-label="Cell ${index}" aria-describedby="${
+            cell === " " ? "instructions" : ""
+          }">
+            <span id="cell-status-${index}" class="visually-hidden">
+              ${
+                cell !== " "
+                  ? "Cell " + index + ", filled with mark " + cell
+                  : "Cell " + index + ", empty"
+              }
+            </span>
+          </button>`;
         })
         .join("")}
     `;
@@ -51,9 +68,10 @@ export default class GameBoard extends HTMLElement {
       <div class="game-board">
         <header-component showTurn="true" showRestartButton="true"></header-component> 
         <main>
-          <section class="grid">
+          <section class="grid" aria-label="Tic tac toe grid" role="grid">
             ${this.renderCells()}
           </section>
+          <span class="visually-hidden" id="instructions">Press Space or Enter to place your mark</span>
         </main>
         <footer-component></footer-component>
       </div>
@@ -65,6 +83,7 @@ export default class GameBoard extends HTMLElement {
 
     Array.from(gridCells).forEach((cell) => {
       cell.addEventListener("click", (e) => {
+        e.preventDefault();
         if (Store.activePlayer === Store.PLAYER.CPU) return;
         if (Store.gameStatus !== Store.RESULT.NO_RESULT) return;
         if (cell.classList.contains("cell-occupied")) {

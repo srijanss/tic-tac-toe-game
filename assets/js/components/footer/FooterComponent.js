@@ -45,17 +45,17 @@ export default class FooterComponent extends HTMLElement {
     this.shadow.innerHTML = `
       <style>${css}</style>
       <footer>
-        <section class="score-component x-score">
-          <h2>X (${this.playerWithXMark})</h2>
-          <p>${this.XMarkScore}</p>
+        <section class="score-component x-score" aria-labelledby="x-player" aria-describedby="x-score">
+          <h2 id="x-player">X (${this.playerWithXMark})</h2>
+          <p id="x-score"">${this.XMarkScore}</p>
         </section>
-        <section class="score-component tie-score">
-          <h2>Ties</h2>
-          <p>${Store.ties}</p>
+        <section class="score-component tie-score" aria-labelledby="tie-heading" aria-describedby="tie-score">
+          <h2 id="tie-heading">Ties</h2>
+          <p id="tie-score">${Store.ties}</p>
         </section>
-        <section class="score-component o-score">
-          <h2>O (${this.playerWithOMark})</h2>
-          <p>${this.OMarkScore}</p>
+        <section class="score-component o-score" aria-labelledby="o-player" aria-describedby="o-score">
+          <h2 id="o-player">O (${this.playerWithOMark})</h2>
+          <p id="o-score">${this.OMarkScore}</p>
         </section>
       </footer>
     `;
