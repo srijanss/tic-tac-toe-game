@@ -179,6 +179,7 @@
 @define-mixin button-styles {
   button {
     cursor: pointer;
+    color: var(--color-dark-navy);
   }
   @mixin primary-button-styles;
   @mixin secondary-button-styles;
