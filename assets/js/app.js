@@ -16,6 +16,10 @@ export default class App extends HTMLElement {
     this.render();
   }
 
+  disconnectedCallback() {
+    Store.unsubscribe(this);
+  }
+
   renderMenu() {
     this.clearContent();
     setTimeout(() => {
