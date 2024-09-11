@@ -27,8 +27,7 @@
     border-bottom: 8px solid var(--color-semi-dark-navy-border);
     padding: 1.5rem 1.5rem;
     margin: 2rem 0;
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 1rem;
 
     & fieldset {
