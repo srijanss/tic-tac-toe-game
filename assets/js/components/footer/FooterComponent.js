@@ -6,13 +6,17 @@ export default class FooterComponent extends HTMLElement {
     super();
     Store.subscribe(this);
     this.playerWithXMark =
-      Store.player1Mark === "x" ? Store.player1 : Store.player2;
+      Store.player1Mark === Store.MARK.X ? Store.player1 : Store.player2;
     this.playerWithOMark =
-      Store.player1Mark === "o" ? Store.player1 : Store.player2;
+      Store.player1Mark === Store.MARK.O ? Store.player1 : Store.player2;
     this.XMarkScore =
-      Store.player1Mark === "x" ? Store.player1Score : Store.player2Score;
+      Store.player1Mark === Store.MARK.X
+        ? Store.player1Score
+        : Store.player2Score;
     this.OMarkScore =
-      Store.player1Mark === "o" ? Store.player1Score : Store.player2Score;
+      Store.player1Mark === Store.MARK.O
+        ? Store.player1Score
+        : Store.player2Score;
   }
 
   connectedCallback() {
@@ -26,9 +30,13 @@ export default class FooterComponent extends HTMLElement {
   update(result) {
     if (result === Store.RESULT.WIN || result === Store.RESULT.TIE) {
       this.XMarkScore =
-        Store.player1Mark === "x" ? Store.player1Score : Store.player2Score;
+        Store.player1Mark === Store.MARK.X
+          ? Store.player1Score
+          : Store.player2Score;
       this.OMarkScore =
-        Store.player1Mark === "o" ? Store.player1Score : Store.player2Score;
+        Store.player1Mark === Store.MARK.O
+          ? Store.player1Score
+          : Store.player2Score;
       this.render();
     }
   }

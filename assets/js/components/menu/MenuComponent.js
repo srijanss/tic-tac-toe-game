@@ -24,7 +24,7 @@ export default class MenuComponent extends HTMLElement {
               <ul>
                 <li>
                   <label for="x-mark" aria-label="Mark X">
-                    <input type="radio" name="mark" id="x-mark" value="${Store.activeMark}" checked />
+                    <input type="radio" name="mark" id="x-mark" value="${Store.MARK.X}" checked />
                     <svg
                       width="64"
                       height="64"
@@ -41,7 +41,7 @@ export default class MenuComponent extends HTMLElement {
                 </li>
                 <li>
                   <label for="o-mark" aria-label="Mark O">
-                    <input type="radio" name="mark" id="o-mark" value="o" />
+                    <input type="radio" name="mark" id="o-mark" value="${Store.MARK.O}" />
                     <svg
                       width="64"
                       height="64"
@@ -79,7 +79,8 @@ export default class MenuComponent extends HTMLElement {
         });
         e.currentTarget.setAttribute("checked", "");
         Store.player1Mark = e.currentTarget.value;
-        Store.player2Mark = e.currentTarget.value === "x" ? "o" : "x";
+        Store.player2Mark =
+          e.currentTarget.value === Store.MARK.X ? Store.MARK.O : Store.MARK.X;
       });
     });
 
