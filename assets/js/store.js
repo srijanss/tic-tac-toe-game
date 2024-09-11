@@ -261,7 +261,9 @@ class Store {
     this.gameStatus = this.checkWinOrTie();
     this.switchPlayerTurn();
     if (this.gameStatus !== this.RESULT.NO_RESULT) {
-      this.showGameStatus();
+      setTimeout(() => {
+        this.showGameStatus();
+      }, 500);
     }
     this.notify(this.gameStatus);
   }
