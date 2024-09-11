@@ -267,7 +267,13 @@ class Store {
   }
 
   checkWinOrTie() {
-    const gameLogic = new GameLogic(this.gameBoard);
+    const opponentMark =
+      this.activeMark === this.MARK.X ? this.MARK.O : this.MARK.X;
+    const gameLogic = new GameLogic(
+      this.gameBoard,
+      this.activeMark,
+      opponentMark
+    );
     const result = gameLogic.checkWinner();
     if (result) {
       if (result.winner === this.player1Mark) {
@@ -325,7 +331,13 @@ class Store {
   }
 
   getCpuMove() {
-    const gameLogic = new GameLogic(this.gameBoard);
+    const opponentMark =
+      this.activeMark === this.MARK.X ? this.MARK.O : this.MARK.X;
+    const gameLogic = new GameLogic(
+      this.gameBoard,
+      this.activeMark,
+      opponentMark
+    );
     return gameLogic.getCpuMove();
   }
 }
