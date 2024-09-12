@@ -72,5 +72,9 @@
         }
       }
     }
+
+    @mixin media-query-tablet {
+      margin-top: 19px;
+    }
   }
 }

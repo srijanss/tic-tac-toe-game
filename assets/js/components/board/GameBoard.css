@@ -26,7 +26,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, auto);
-    gap: 1.5rem;
+    gap: 1.25rem;
     justify-content: center;
     & .grid-cell {
       width: var(--cell-size);
@@ -117,6 +117,7 @@
     @mixin media-query-tablet {
       --cell-size: 140px;
       --icon-size: 64px;
+      margin-top: 19px;
     }
   }
 }

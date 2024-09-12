@@ -30,7 +30,7 @@
 
 body {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   font-family: var(--default-font-family);
   font-variation-settings: "wght" var(--fw-medium);
   font-size: var(--default-font-size);
@@ -38,6 +38,11 @@ body {
   background-color: var(--color-dark-navy);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  @mixin media-query-tablet {
+    display: flex;
+    align-items: center;
+  }
 }
 img {
   max-inline-size: 100%;

@@ -107,6 +107,7 @@
 
     @mixin media-query-tablet {
       --button-size: 52px;
+      --icon-size: 20px;
     }
   }
 }
