@@ -1,12 +1,9 @@
 @import "../../../css/_css-reset.css";
 @import "../../../css/_mixins.css";
 
-@define-mixin score-component {
-}
-
 :host *,
-:host *:before,
-:host *:after {
+:host *::before,
+:host *::after {
   box-sizing: border-box;
 }
 
@@ -17,9 +14,11 @@
     margin-top: 1.25rem;
     display: flex;
     justify-content: space-between;
+
     & .score-component {
       --component-width: 96px;
       --component-height: 64px;
+
       width: var(--component-width);
       height: var(--component-height);
       border-radius: 10px;
@@ -31,9 +30,11 @@
       &.x-score {
         background-color: var(--color-light-blue);
       }
+
       &.o-score {
         background-color: var(--color-light-yellow);
       }
+
       &.tie-score {
         background-color: var(--color-silver);
       }
@@ -47,6 +48,7 @@
         text-transform: uppercase;
         color: var(--color-dark-navy);
       }
+
       & p {
         font-family: var(--default-font-family);
         font-size: 1.25rem; /* 20px */

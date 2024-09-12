@@ -1,12 +1,9 @@
 @import "../../../css/_css-reset.css";
 @import "../../../css/_mixins.css";
 
-@define-mixin score-component {
-}
-
 :host *,
-:host *:before,
-:host *:after {
+:host *::before,
+:host *::after {
   box-sizing: border-box;
 }
 
@@ -22,12 +19,14 @@
   & .grid {
     --cell-size: 96px;
     --icon-size: 40px;
+
     margin-top: 64px;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, auto);
     gap: 1.25rem;
     justify-content: center;
+
     & .grid-cell {
       width: var(--cell-size);
       height: var(--cell-size);
@@ -38,7 +37,8 @@
 
       &[data-activemark="x"].cell-occupied {
         position: relative;
-        &:before {
+
+        &::before {
           content: "";
           width: var(--icon-size);
           height: var(--icon-size);
@@ -54,14 +54,16 @@
       &[data-activemark="x"].cell-occupied.winning-cell {
         background-color: var(--color-light-blue);
         border-bottom: 8px solid var(--color-light-blue-border);
-        &:before {
+
+        &::before {
           background-image: url("../../../images/icon-x-inverted.svg");
         }
       }
 
       &[data-activemark="o"].cell-occupied {
         position: relative;
-        &:before {
+
+        &::before {
           content: "";
           width: var(--icon-size);
           height: var(--icon-size);
@@ -73,10 +75,12 @@
             contain;
         }
       }
+
       &[data-activemark="o"].cell-occupied.winning-cell {
         background-color: var(--color-light-yellow);
         border-bottom: 8px solid var(--color-light-yellow-border);
-        &:before {
+
+        &::before {
           background-image: url("../../../images/icon-o-inverted.svg");
         }
       }
@@ -84,7 +88,8 @@
       &[data-activemark="x"]:not(.cell-occupied):hover,
       &[data-activemark="x"]:not(.cell-occupied):focus {
         position: relative;
-        &:before {
+
+        &::before {
           content: "";
           width: var(--icon-size);
           height: var(--icon-size);
@@ -100,7 +105,8 @@
       &[data-activemark="o"]:not(.cell-occupied):hover,
       &[data-activemark="o"]:not(.cell-occupied):focus {
         position: relative;
-        &:before {
+
+        &::before {
           content: "";
           width: var(--icon-size);
           height: var(--icon-size);
@@ -117,6 +123,7 @@
     @mixin media-query-tablet {
       --cell-size: 140px;
       --icon-size: 64px;
+
       margin-top: 19px;
     }
   }

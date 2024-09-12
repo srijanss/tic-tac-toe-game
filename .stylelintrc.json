@@ -1,0 +1,12 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "import-notation": "string",
+    "color-function-notation": "legacy",
+    "hue-degree-notation": "number",
+    "at-rule-no-unknown": null,
+    "custom-property-empty-line-before": null,
+    "property-no-vendor-prefix": null,
+    "media-feature-range-notation": "prefix"
+  }
+}

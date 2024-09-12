@@ -15,7 +15,7 @@
   --color-light-blue: hsl(178, 60%, 48%);
   --color-light-blue-border: #118c87;
   --color-error: hsl(0, 100%, 74%);
-  --default-font-family: Outfit, sans-serif;
+  --default-font-family: "Outfit", sans-serif;
   --default-font-size: 16px;
   --fw-medium: 500;
   --fw-bold: 700;
@@ -44,19 +44,18 @@ body {
     align-items: center;
   }
 }
+
 img {
   max-inline-size: 100%;
   object-fit: cover;
 }
 
-@mixin text-styles;
-@mixin button-styles;
-@mixin visually-hidden;
-
 tic-tac-toe-app {
-  display: block;
-  @mixin body-styles;
   --app-width: 328px;
+
+  @mixin body-styles;
+
+  display: block;
   width: var(--app-width);
   margin: 0 auto;
   padding: 1.5rem 0;

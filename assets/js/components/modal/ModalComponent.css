@@ -2,8 +2,8 @@
 @import "../../../css/_mixins.css";
 
 :host *,
-:host *:before,
-:host *:after {
+:host *::before,
+:host *::after {
   box-sizing: border-box;
 }
 
@@ -29,23 +29,30 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
       & p {
         @mixin body-styles;
+
         font-variation-settings: "wght" var(--fw-bold);
         text-transform: uppercase;
         color: var(--color-silver);
         margin-bottom: 1rem;
       }
+
       & h2 {
         @mixin heading-m-styles;
+
         text-transform: uppercase;
         margin-bottom: 1.5rem;
+
         &[data-winnermark="x"] {
           --icon-size: 28px;
+
           color: var(--color-light-blue);
           padding-left: calc(var(--icon-size) + 9px);
           position: relative;
-          &:before {
+
+          &::before {
             content: "";
             width: var(--icon-size);
             height: var(--icon-size);
@@ -57,12 +64,15 @@
             background-repeat: no-repeat;
           }
         }
+
         &[data-winnermark="o"] {
           --icon-size: 30px;
+
           color: var(--color-light-yellow);
           padding-left: calc(var(--icon-size) + 9px);
           position: relative;
-          &:before {
+
+          &::before {
             content: "";
             width: var(--icon-size);
             height: var(--icon-size);
@@ -94,10 +104,13 @@
 
         & h2 {
           @mixin heading-l-styles;
+
           margin-bottom: 2rem;
+
           &[data-winnermark="x"],
           &[data-winnermark="o"] {
             --icon-size: 64px;
+
             padding-left: calc(var(--icon-size) + 24px);
           }
         }

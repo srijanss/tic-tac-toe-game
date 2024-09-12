@@ -1,5 +1,8 @@
 module.exports = {
   plugins: [
+    require("stylelint")({
+      configFile: "./.stylelintrc.json",
+    }),
     require("autoprefixer")({
       overrideBrowserslist: ["last 2 versions", "ie > 8"],
     }),
