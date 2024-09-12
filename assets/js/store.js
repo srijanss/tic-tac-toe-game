@@ -24,21 +24,21 @@ class Store {
       X: "x",
       O: "o",
     };
-    this._versus = this.VERSUS.PLAYER;
-    this._player1 = this.PLAYER.PLAYER1;
-    this._player2 = this.PLAYER.PLAYER2;
-    this._player1Mark = this.MARK.X;
-    this._player2Mark = this.MARK.O;
+    this._versus = null;
+    this._player1 = null;
+    this._player2 = null;
+    this._player1Mark = null;
+    this._player2Mark = null;
     this._player1Score = 0;
     this._player2Score = 0;
     this._ties = 0;
-    this._activeMark = this.MARK.X;
-    this._activePlayer = this.PLAYER.PLAYER1;
-    this._gameBoard = Array(9).fill(" ");
-    this._winningCombination = [];
+    this._activeMark = null;
+    this._activePlayer = null;
+    this._gameBoard = null;
+    this._winningCombination = null;
     this._winnerMark = null;
-    this._gameStatus = this.RESULT.NO_RESULT;
-    this._activePage = this.PAGE.BOARD;
+    this._gameStatus = null;
+    this._activePage = null;
     this._observers = [];
     this.init();
   }
@@ -55,9 +55,9 @@ class Store {
 
   init() {
     let data = this.getFromLocalStorage();
-    this.versus = data.versus || this.VERSUS.PLAYER;
+    this.versus = data.versus || this.VERSUS.CPU;
     this.player1 = data.player1 || this.PLAYER.PLAYER1;
-    this.player2 = data.player2 || this.PLAYER.PLAYER2;
+    this.player2 = data.player2 || this.PLAYER.CPU;
     this.player1Mark = data.player1Mark || this.MARK.X;
     this.player2Mark = data.player2Mark || this.MARK.O;
     this.player1Score = data.player1Score || 0;
