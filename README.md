@@ -1,99 +1,189 @@
-# Frontend Mentor - Tic Tac Toe
+# Frontend Mentor - Tic Tac Toe solution
 
-![Design preview for the Tic Tac Toe coding challenge](./preview.jpg)
+This is a solution to the [Tic Tac Toe challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/tic-tac-toe-game-Re7ZF_E2v). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-## Welcome! 👋
+## Table of contents
 
-Thanks for purchasing this premium Frontend Mentor coding challenge.
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
 
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects. These premium challenges are perfect portfolio pieces, so please feel free to use what you create in your portfolio to show others.
+## Overview
 
-**To do this challenge, you need a strong understanding of HTML, CSS, and JavaScript.**
+### The challenge
 
-## The challenge
-
-Your challenge is to build out this Tic Tac Toe game and get it looking as close to the design as possible.
-
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
-
-Your users should be able to:
+Users should be able to:
 
 - View the optimal layout for the game depending on their device's screen size
 - See hover states for all interactive elements on the page
 - Play the game either solo vs the computer or multiplayer against another person
 - **Bonus 1**: Save the game state in the browser so that it’s preserved if the player refreshes their browser
-- **Bonus 2**: Instead of having the computer randomly make its moves, try making it clever so it’s proactive in blocking your moves and trying to win
+- **Bonus 2**: Instead of having the computer randomly make their moves, try making it clever so it’s proactive in blocking your moves and trying to win
 
-### Expected behaviour
+### Screenshot
 
-- You can choose to make the default screen either the new game menu or the solo player game board. Note that we're using the solo player game board for the design screenshot, so if you choose the new game menu it won't match up in the design comparison slider. This isn't a big deal, but is something worth considering.
-- On the new game screen, whichever mark isn't selected for the first player is automatically assigned to the second player when the game is started.
-- The first turn of the first round is always played by whoever is playing as X. For every following round, the first turn alternates between O and X.
-- After a round, if the player chooses to quit the game, they should be taken back to the new game menu.
-- If the restart icon in the top right is clicked, the "Restart game?" modal should show and allow the player to reset the game or cancel and continue to play.
+![](./assets/images/board-screenshot-desktop.png)
+![](./assets/images/menu-screenshot-desktop.png)
+![](./assets/images/board-screenshot-mobile.png)
 
-Want some support on the challenge? [Join our community](https://www.frontendmentor.io/community) and ask questions in the **#help** channel.
+### Links
 
-## Where to find everything
+- Solution URL: [https://github.com/srijanss/tic-tac-toe-game](https://github.com/srijanss/tic-tac-toe-game)
+- Live Site URL: [https://srijanss.github.io/tic-tac-toe-game/](https://srijanss.github.io/tic-tac-toe-game/)
 
-Your task is to build out the project to the design file provided. We provide both Sketch and Figma versions of the design, so you can choose which tool you prefer to use. You can download the design file on the platform. **Please be sure not to share them with anyone else.** The design download comes with a `README.md` file as well to help you get set up.
+## My process
 
-All the required assets for this project are in the `/assets` folder. The assets are already exported for the correct screen size and optimized. Some images are reusable at multiple screen sizes. So if you don't see an image in a specific folder, it will typically be in another folder for that page.
+### Built with
 
-The design system in the design file will give you more information about the various colors, fonts, and styles used in this project. Our fonts always come from [Google Fonts](https://fonts.google.com/).
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- CSS Grid
+- Mobile-first workflow
+- [Vite](https://vitejs.dev/) - Lightweight frontend tooling
+- [PostCSS](https://postcss.org/) - Tool to transform CSS using plugins
 
-## Building your project
+### What I learned
 
-Feel free to use any workflow that you feel comfortable with. Below is a suggested process, but do not feel like you need to follow these steps:
+- I learned new aria roles and attributes to make the game accessible, like grid, gridcell etc.
+- I learned how to use aria-live attribute to make the player turn live for screen readers.
 
-1. Separate the `starter-code` from the rest of this project and rename it to something meaningful for you. Initialize the codebase as a public repository on [GitHub](https://github.com/). Creating a repo will make it easier to share your code with the community if you need help. If you're not sure how to do this, [have a read-through of this Try Git resource](https://try.github.io/). **⚠️ IMPORTANT ⚠️: There are already a couple of `.gitignore` files in this project. Please do not remove them or change the content of the files. If you create a brand new project, please use the `.gitignore` files provided in your new codebase. This is to avoid the accidental upload of the design files to GitHub. With these premium challenges, please be sure not to share the design files in your GitHub repo. Thanks!**
-2. Configure your repository to publish your code to a web address. This will also be useful if you need some help during a challenge as you can share the URL for your project with your repo URL. There are a number of ways to do this, and we provide some recommendations below.
-3. Look through the designs to start planning out how you'll tackle the project. This step is crucial to help you think ahead for CSS classes to create reusable styles.
-4. Before adding any styles, structure your content with HTML. Writing your HTML first can help focus your attention on creating well-structured content.
-5. Write out the base styles for your project, including general content styles, such as `font-family` and `font-size`.
-6. Start adding styles to the top of the page and work down. Only move on to the next section once you're happy you've completed the area you're working on.
+```html
+<div class="game-board">
+  <header-component showTurn="true" showRestartButton="true"></header-component>
+  <main>
+    <section class="grid" aria-label="Tic tac toe grid" role="grid"></section>
+    <span class="visually-hidden" id="instructions"
+      >Press Space or Enter to place your mark</span
+    >
+  </main>
+  <footer-component></footer-component>
+</div>
+```
 
-## Deploying your project
+- I learned how to use CSS :not() pseudo-class to style the cells that are not occupied by a mark.
+- I learned how to use CSS :hover and :focus pseudo-classes to style the cells when hovered or focused.
+- I learned how to use CSS :before pseudo-element to add an icon to the cells when hovered or focused.
+- I learned how to use CSS variables to set the icon size and position.
 
-As mentioned above, there are many ways to host your project for free. Our recommended hosts are:
+```css
+&[data-activemark="x"]:not(.cell-occupied):hover,
+&[data-activemark="x"]:not(.cell-occupied):focus {
+  position: relative;
+  &:before {
+    content: "";
+    width: var(--icon-size);
+    height: var(--icon-size);
+    position: absolute;
+    top: calc(50% - var(--icon-size) / 2);
+    left: calc(50% - var(--icon-size) / 2);
+    display: block;
+    background: url("../../../images/icon-x-outline.svg") no-repeat center
+      center / contain;
+  }
+}
 
-- [GitHub Pages](https://pages.github.com/)
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
+&[data-activemark="o"]:not(.cell-occupied):hover,
+&[data-activemark="o"]:not(.cell-occupied):focus {
+  position: relative;
+  &:before {
+    content: "";
+    width: var(--icon-size);
+    height: var(--icon-size);
+    position: absolute;
+    top: calc(50% - var(--icon-size) / 2);
+    left: calc(50% - var(--icon-size) / 2);
+    display: block;
+    background: url("../../../images/icon-o-outline.svg") no-repeat center
+      center / contain;
+  }
+}
+```
 
-You can host your site using one of these solutions or any of our other trusted providers. [Read more about our recommended and trusted hosts](https://medium.com/frontend-mentor/frontend-mentor-trusted-hosting-providers-bf000dfebe).
+- I learned how to use aria-label attribute to provide a label for the grid cells.
+- I learned how to use aria-describedby attribute to associate the instructions with the grid cells.
+- I learned how to change cell state using data attributes.
+- I learned how to use Javascript's map method to render the cells.
 
-## Create a custom `README.md`
+```js
+renderCells() {
+  return `
+    ${Store.gameBoard
+      .map((cell, index) => {
+        return `<button class="grid-cell ${
+          cell !== " " ? "cell-occupied" : ""
+        } ${
+          Store.winningCombination.includes(index) ? "winning-cell" : ""
+        }" data-activemark=${
+          cell === " " ? Store.activeMark : cell
+        } data-index="${index}" role="gridcell" aria-label="Cell ${index}" aria-describedby="${
+          cell === " " ? "instructions" : ""
+        }">
+          <span id="cell-status-${index}" class="visually-hidden">
+            ${
+              cell !== " "
+                ? "Cell " + index + ", filled with mark " + cell
+                : "Cell " + index + ", empty"
+            }
+          </span>
+        </button>`;
+      })
+      .join("")}
+  `;
+}
+```
 
-We strongly recommend overwriting this `README.md` with a custom one. We've provided a template inside the [`README-template.md`](./README-template.md) file in this starter code.
+- I separated the game logic and data store from the UI components to make the code more modular and maintainable.
+- I learned how to use Javascript's every method to check if the game is a tie.
+- I learned how to use Javascript's filter method to filter the cells that match the active mark.
+- I learned how to use Math functions to generate a random number.
 
-The template provides a guide for what to add. A custom `README` will help you explain your project and reflect on your learnings. Please feel free to edit our template as much as you like.
+```js
+getCpuMove() {
+  const opponentMark =
+    this.activeMark === this.MARK.X ? this.MARK.O : this.MARK.X;
+  const gameLogic = new GameLogic(
+    this.gameBoard,
+    this.activeMark,
+    opponentMark
+  );
+  return gameLogic.getCpuMove();
+}
 
-Once you've added your information to the template, delete this file and rename the `README-template.md` file to `README.md`. That will make it show up as your repository's README file.
+checkTie() {
+    return this.gameBoard.every((cell) => cell !== " ");
+  }
 
-## Submitting your solution
+cpuRandomMove(emptyCells) {
+  return emptyCells[Math.floor(Math.random() * emptyCells.length)];
+}
 
-Submit your solution on the platform for the rest of the community to see. Follow our ["Complete guide to submitting solutions"](https://medium.com/frontend-mentor/a-complete-guide-to-submitting-solutions-on-frontend-mentor-ac6384162248) for tips on how to do this.
+getWinCombinationCount(marker) {
+  let count = 0;
+  this.winningCombinations.forEach((combination) => {
+    const [a, b, c] = combination;
+    const markerMatch = [a, b, c].filter(
+      (cell) => this.gameBoard[cell] === marker
+    );
+    if (markerMatch.length !== 2) return;
+    count++;
+  });
+  return count;
+}
+```
 
-Remember, if you're looking for feedback on your solution, be sure to ask questions when submitting it. The more specific and detailed you are with your questions, the higher the chance you'll get valuable feedback from the community.
+### Useful resources
 
-**⚠️ IMPORTANT ⚠️: With these premium challenges, please be sure not to upload the design files to GitHub when you're submitting to the platform and sharing it around. If you've created a brand new project, the easiest way to do that is to copy across the `.gitignore` provided in this starter project.**
+- [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements)
+- [Accessibility ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
 
-## Sharing your solution
+## Author
 
-There are multiple places you can share your solution:
-
-1. Share your solution page in the **#finished-projects** channel of the [community](https://www.frontendmentor.io/community). 
-2. Tweet [@frontendmentor](https://twitter.com/frontendmentor) and mention **@frontendmentor**, including the repo and live URLs in the tweet. We'd love to take a look at what you've built and help share it around.
-3. Share your solution on other social channels like LinkedIn.
-4. Blog about your experience building your project. Writing about your workflow, technical choices, and talking through your code is a brilliant way to reinforce what you've learned. Great platforms to write on are [dev.to](https://dev.to/), [Hashnode](https://hashnode.com/), and [CodeNewbie](https://community.codenewbie.org/).
-
-We provide templates to help you share your solution once you've submitted it on the platform. Please do edit them and include specific questions when you're looking for feedback. 
-
-The more specific you are with your questions the more likely it is that another member of the community will give you feedback.
-
-## Got feedback for us?
-
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please email hi[at]frontendmentor[dot]io.
-
-**Have fun building!** 🚀
+- Website - [Srijan Manandhar](https://github.com/srijanss)
+- Frontend Mentor - [@srijanss](https://www.frontendmentor.io/profile/srijanss)
