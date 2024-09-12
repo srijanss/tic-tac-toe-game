@@ -43,20 +43,20 @@ class Store {
     this.init();
   }
 
-  getFromLocalStorage() {
-    return localStorage.getItem("store")
-      ? JSON.parse(localStorage.getItem("store"))
+  getFromSessionStorage() {
+    return sessionStorage.getItem("store")
+      ? JSON.parse(sessionStorage.getItem("store"))
       : {};
   }
 
-  setToLocalStorage(data) {
-    localStorage.setItem("store", JSON.stringify(data));
+  setToSessionStorage(data) {
+    sessionStorage.setItem("store", JSON.stringify(data));
   }
 
   init() {
-    let data = this.getFromLocalStorage();
+    let data = this.getFromSessionStorage();
     this.versus = data.versus || this.VERSUS.CPU;
-    this.player1 = data.player1 || this.PLAYER.PLAYER1;
+    this.player1 = data.player1 || this.PLAYER.YOU;
     this.player2 = data.player2 || this.PLAYER.CPU;
     this.player1Mark = data.player1Mark || this.MARK.X;
     this.player2Mark = data.player2Mark || this.MARK.O;
@@ -64,7 +64,7 @@ class Store {
     this.player2Score = data.player2Score || 0;
     this.ties = data.ties || 0;
     this.activeMark = data.activeMark || this.MARK.X;
-    this.activePlayer = data.activePlayer || this.PLAYER.PLAYER1;
+    this.activePlayer = data.activePlayer || this.PLAYER.YOU;
     this.gameBoard = data.gameBoard || Array(9).fill(" ");
     this.winningCombination = data.winningCombination || [];
     this.winnerMark = data.winnerMark || null;
@@ -87,15 +87,15 @@ class Store {
       gameStatus: this.gameStatus,
       activePage: this.activePage,
     };
-    this.setToLocalStorage(data);
+    this.setToSessionStorage(data);
   }
 
   updateData(obj) {
-    const data = this.getFromLocalStorage();
+    const data = this.getFromSessionStorage();
     Object.keys(obj).forEach((key) => {
       data[key] = obj[key];
     });
-    this.setToLocalStorage(data);
+    this.setToSessionStorage(data);
   }
 
   get activePage() {
