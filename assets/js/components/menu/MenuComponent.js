@@ -36,7 +36,8 @@ export default class MenuComponent extends HTMLElement {
               <legend>Pick player 1's mark</legend>
               <ul>
                 <li>
-                  <label for="x-mark" aria-label="Mark X">
+                  <label for="x-mark">
+                    <span class="visually-hidden">Mark X</span>
                     <input type="radio" name="mark" id="x-mark" value="${Store.MARK.X}" checked />
                     <svg
                       width="64"
@@ -53,7 +54,8 @@ export default class MenuComponent extends HTMLElement {
                   </label>
                 </li>
                 <li>
-                  <label for="o-mark" aria-label="Mark O">
+                  <label for="o-mark">
+                    <span class="visually-hidden">Mark O</span>
                     <input type="radio" name="mark" id="o-mark" value="${Store.MARK.O}" />
                     <svg
                       width="64"

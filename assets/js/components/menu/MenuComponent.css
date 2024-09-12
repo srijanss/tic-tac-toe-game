@@ -37,6 +37,7 @@
 
     & fieldset {
       & legend {
+        width: 100%;
         @mixin heading-xs-styles;
         text-transform: uppercase;
         text-align: center;
